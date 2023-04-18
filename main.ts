@@ -13,6 +13,8 @@ serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function () {
     } else if (stockligne == "#") {
         traitementsignal = 0
         basic.showIcon(IconNames.No)
+    } else if (stockligne == "Coucou") {
+        serial.writeLine("OK")
     }
 })
 input.onButtonPressed(Button.A, function () {
