@@ -7,14 +7,17 @@ radio.onReceivedNumber(function (receivedNumber) {
 serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function () {
     stockligne = serial.readLine()
     radio.sendNumber(parseFloat(stockligne))
-    if (stockligne == "restart") {
+    if (stockligne == "R") {
         traitementsignal = 1
         basic.showString("R")
     } else if (stockligne == "#") {
         traitementsignal = 0
         basic.showIcon(IconNames.No)
     } else if (stockligne == "Coucou") {
-        serial.writeLine("OK")
+        serial.writeNumber(1)
+        basic.showIcon(IconNames.Heart)
+        basic.pause(2000)
+        basic.showIcon(IconNames.No)
     }
 })
 input.onButtonPressed(Button.A, function () {
