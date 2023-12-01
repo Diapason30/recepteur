@@ -1,7 +1,9 @@
 radio.onReceivedNumber(function (receivedNumber) {
     TransmUSB = "D" + receivedNumber + "F"
-    while (traitementsignal == 1) {
-        serial.writeLine(TransmUSB)
+    if (traitementsignal == 1) {
+        for (let index = 0; index < 10; index++) {
+            serial.writeLine(TransmUSB)
+        }
     }
 })
 serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function () {
@@ -17,7 +19,10 @@ serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function () {
         serial.writeNumber(1)
         basic.showIcon(IconNames.Heart)
         basic.pause(2000)
-        basic.showIcon(IconNames.No)
+        basic.showString("R")
+    } else if (stockligne == "99999") {
+        radio.sendNumber(parseFloat(stockligne))
+        control.reset()
     }
 })
 input.onButtonPressed(Button.A, function () {
@@ -31,8 +36,9 @@ input.onButtonPressed(Button.B, function () {
 let stockligne = ""
 let TransmUSB = ""
 let traitementsignal = 0
-basic.showIcon(IconNames.No)
+basic.showString("1")
+basic.showString("R")
 radio.setTransmitPower(7)
 serial.redirectToUSB()
 serial.setBaudRate(BaudRate.BaudRate115200)
-traitementsignal = 0
+traitementsignal = 1
